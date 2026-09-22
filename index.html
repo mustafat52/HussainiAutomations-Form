@@ -124,6 +124,11 @@
     </div>
 
     <div class="field">
+      <label for="specificProblem">Want to share a specific problem? <span style="opacity:.5">(optional)</span></label>
+      <input type="text" id="specificProblem" name="specificProblem" placeholder="Tell us a bit more...">
+    </div>
+
+    <div class="field">
       <label for="industry">Industry / sector <span class="req">*</span></label>
       <select id="industry" name="industry" required>
         <option value="" disabled selected>Select one</option>
@@ -168,14 +173,14 @@
     </div>
 
     <button type="submit" class="btn" id="submitBtn">Submit</button>
-    <p class="footnote">See our work at <a href="http://pm-kappa-eight.vercel.app/" target="_blank">hussainiautomations.com</a></p>
+    <p class="footnote">See our work at <a href="https://hussainiautomations.com" target="_blank">hussainiautomations.com</a></p>
   </form>
 
   <div class="success" id="successView">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>
     <h2>Thank you!</h2>
     <p>We've got your details — expect a message on WhatsApp soon.</p>
-    <a class="btn" href="http://pm-kappa-eight.vercel.app/" target="_blank">Visit our website</a>
+    <a class="btn" href="https://hussainiautomations.com" target="_blank">Visit our website</a>
   </div>
 </div>
 
@@ -223,6 +228,7 @@
       business: form.business.value.trim(),
       phone: form.phone.value.trim(),
       email: form.email.value.trim(),
+      specificProblem: form.specificProblem.value.trim(),
       industry: form.industry.value,
       headache: selectedHeadache === 'Other' ? (otherInput.value.trim() || 'Other') : selectedHeadache,
       submittedAt: new Date().toISOString()
