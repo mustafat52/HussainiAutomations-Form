@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hussaini Automations — Let's Talk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0a1424; --navy-2:#0f1c30; --navy-3:#16273f;
+    --cream:#f6f1e6; --cream-2:#efe7d4;
+    --gold:#c7a25c; --gold-bright:#e3c17f;
+    --blue:#5c7a9a; --ink:#16213a; --ink-soft:#48506a;
+    --line-dark:rgba(198,162,92,0.22); --line-light:rgba(22,33,58,0.14);
+    --ease:cubic-bezier(.16,.8,.24,1);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html{ -webkit-text-size-adjust:100%; }
+  body{
+    background:var(--navy); color:var(--cream); font-family:'Inter',sans-serif;
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:60px 20px; position:relative; overflow-x:hidden;
+    padding-top:max(60px, env(safe-area-inset-top,0px));
+    padding-bottom:max(60px, env(safe-area-inset-bottom,0px));
+  }
+  body::before{
+    content:''; position:absolute; inset:0; z-index:0;
+    background:radial-gradient(48% 62% at 82% 18%, rgba(198,162,92,0.18), transparent 60%),
+               radial-gradient(60% 60% at 12% 92%, rgba(92,122,154,0.22), transparent 65%);
+  }
+  h1,h2,.serif{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;}
+  .card{
+    position:relative; z-index:1; width:100%; max-width:520px;
+    background:var(--navy-2); border:1px solid var(--line-dark); border-radius:20px;
+    padding:44px 38px; box-shadow:0 30px 80px rgba(0,0,0,0.4);
+  }
+  @media (max-width:560px){
+    body{ padding:34px 14px; padding-top:max(34px, env(safe-area-inset-top,0px)); padding-bottom:max(34px, env(safe-area-inset-bottom,0px)); }
+    .card{ padding:28px 20px; border-radius:16px; }
+    h1{ font-size:24px; }
+    .sub{ margin-bottom:26px; font-size:14px; }
+  }
+  .brand{ display:flex; align-items:center; gap:10px; margin-bottom:28px; }
+  .brand-dot{ width:8px; height:8px; border-radius:50%; background:var(--gold-bright); }
+  .brand-name{ font-size:14px; color:rgba(246,241,230,0.7); letter-spacing:0.02em; }
+  h1{ font-size:clamp(26px,4vw,32px); line-height:1.2; margin-bottom:12px; }
+  h1 em{ font-style:italic; color:var(--gold-bright); }
+  .sub{ color:rgba(246,241,230,0.62); font-size:15px; margin-bottom:32px; }
+
+  .field{ margin-bottom:20px; }
+  label{ display:block; font-size:13px; color:rgba(246,241,230,0.7); margin-bottom:8px; }
+  label .req{ color:var(--gold-bright); }
+  input[type=text], input[type=tel], input[type=email], select{
+    width:100%; padding:14px 16px; background:var(--navy-3); border:1px solid var(--line-dark);
+    border-radius:10px; color:var(--cream); font-family:'Inter',sans-serif; font-size:16px;
+    outline:none; transition:border-color .3s; min-height:48px;
+  }
+  input::placeholder{ color:rgba(246,241,230,0.35); }
+  input:focus, select:focus{ border-color:var(--gold-bright); }
+  select{ appearance:none; background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="%23e3c17f" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>'); background-repeat:no-repeat; background-position:right 14px center; }
+
+  .chip-group{ display:flex; flex-wrap:wrap; gap:10px; }
+  .chip{
+    padding:12px 18px; border:1px solid var(--line-dark); border-radius:100px;
+    font-size:14px; color:rgba(246,241,230,0.8); cursor:pointer; transition:all .25s var(--ease);
+    user-select:none; min-height:44px; display:flex; align-items:center;
+  }
+  .chip:hover{ border-color:var(--gold-bright); }
+  .chip.active{ background:var(--gold); color:var(--navy); border-color:var(--gold); font-weight:500; }
+  .other-input{ margin-top:12px; display:none; }
+  .other-input.show{ display:block; }
+
+  .btn{
+    width:100%; padding:16px 30px; border-radius:100px; border:none; cursor:pointer;
+    font-size:15.5px; font-weight:500; background:var(--gold); color:var(--navy);
+    margin-top:10px; transition:background .3s, transform .2s; min-height:50px;
+  }
+  .btn:hover{ background:var(--gold-bright); }
+  .btn:active{ transform:scale(0.98); }
+  .btn:disabled{ opacity:0.6; cursor:not-allowed; }
+
+  .footnote{ text-align:center; margin-top:22px; font-size:12.5px; color:rgba(246,241,230,0.4); }
+  .footnote a{ color:var(--gold-bright); text-decoration:none; }
+
+  .success{ display:none; text-align:center; }
+  .success.show{ display:block; }
+  .success svg{ width:52px; height:52px; margin:0 auto 20px; color:var(--gold-bright); }
+  .success h2{ font-size:24px; margin-bottom:10px; }
+  .success p{ color:rgba(246,241,230,0.65); font-size:14.5px; margin-bottom:24px; }
+  .success .btn{ background:transparent; border:1px solid var(--gold); color:var(--cream); }
+  .success .btn:hover{ background:var(--gold); color:var(--navy); }
+
+  .error-msg{ color:#e08a8a; font-size:12.5px; margin-top:6px; display:none; }
+</style>
+</head>
+<body>
+
+<div class="card" id="card">
+  <form id="leadForm">
+    <div class="brand"><span class="brand-dot"></span><span class="brand-name">Hussaini Automations</span></div>
+    <h1>Let's talk about <em>your business.</em></h1>
+    <p class="sub">Drop your details below — we'll follow up on WhatsApp within a day or two.</p>
+
+    <div class="field">
+      <label for="name">Your name <span class="req">*</span></label>
+      <input type="text" id="name" name="name" placeholder="e.g. Fatima Rasheed" required>
+    </div>
+
+    <div class="field">
+      <label for="business">Business name <span class="req">*</span></label>
+      <input type="text" id="business" name="business" placeholder="e.g. Saifee Hardware & Plywood" required>
+    </div>
+
+    <div class="field">
+      <label for="phone">WhatsApp / phone number <span class="req">*</span></label>
+      <input type="tel" id="phone" name="phone" placeholder="e.g. +91 98765 43210" required>
+    </div>
+
+    <div class="field">
+      <label for="email">Email <span style="opacity:.5">(optional)</span></label>
+      <input type="email" id="email" name="email" placeholder="you@business.com">
+    </div>
+
+    <div class="field">
+      <label for="industry">Industry / sector <span class="req">*</span></label>
+      <select id="industry" name="industry" required>
+        <option value="" disabled selected>Select one</option>
+        <option>Healthcare</option>
+        <option>Retail</option>
+        <option>Manufacturing</option>
+        <option>Corporate</option>
+        <option>Fashion</option>
+        <option>Architecture</option>
+        <option>Education</option>
+        <option>Real Estate</option>
+        <option>Hospitality / F&amp;B</option>
+        <option>Logistics / Transportation</option>
+        <option>Construction</option>
+        <option>IT / Technology</option>
+        <option>Beauty / Wellness</option>
+        <option>Automotive</option>
+        <option>Legal / Professional Services</option>
+        <option>E-commerce</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Biggest manual headache right now <span class="req">*</span></label>
+      <div class="chip-group" id="headacheChips">
+        <div class="chip" data-value="Inventory/Stock">Inventory / Stock</div>
+        <div class="chip" data-value="Accounts/Billing">Accounts / Billing</div>
+        <div class="chip" data-value="HR/Staff">HR / Staff</div>
+        <div class="chip" data-value="Reporting/MIS">Reporting / MIS</div>
+        <div class="chip" data-value="Sales/CRM">Sales / Client Tracking</div>
+        <div class="chip" data-value="Scheduling">Scheduling / Appointments</div>
+        <div class="chip" data-value="Vendor/Procurement">Vendor / Procurement</div>
+        <div class="chip" data-value="Payroll">Payroll</div>
+        <div class="chip" data-value="Compliance/Docs">Compliance / Paperwork</div>
+        <div class="chip" data-value="Other">Something else</div>
+      </div>
+      <div class="other-input" id="otherWrap">
+        <input type="text" id="otherHeadache" placeholder="Tell us briefly...">
+      </div>
+      <div class="error-msg" id="headacheError">Please pick one option.</div>
+    </div>
+
+    <button type="submit" class="btn" id="submitBtn">Submit</button>
+    <p class="footnote">See our work at <a href="http://pm-kappa-eight.vercel.app/" target="_blank">hussainiautomations.com</a></p>
+  </form>
+
+  <div class="success" id="successView">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg>
+    <h2>Thank you!</h2>
+    <p>We've got your details — expect a message on WhatsApp soon.</p>
+    <a class="btn" href="http://pm-kappa-eight.vercel.app/" target="_blank">Visit our website</a>
+  </div>
+</div>
+
+<script>
+  /* ====================================================================
+     WHERE SUBMISSIONS GO — edit this one line.
+     Easiest option: create a free form at https://formspree.io, verify
+     your email, and paste the endpoint it gives you below.
+     Alternative: a Google Sheet + Apps Script "Web App" URL works the
+     same way — just paste that URL in ENDPOINT_URL instead.
+     Until you set this, entries are saved locally in this browser only
+     (open localStorage in devtools to see them) so you can test the flow.
+  ==================================================================== */
+  const ENDPOINT_URL = "https://script.google.com/macros/s/AKfycbxJjFGfBM9uFXJ7Pyrkghz30jhUSQ7JnI4qJlR4QW8-Vgd2TZgwRJy7P7cTl4RFJK-c/exec";
+
+  const chips = document.querySelectorAll('.chip');
+  const otherWrap = document.getElementById('otherWrap');
+  const otherInput = document.getElementById('otherHeadache');
+  const headacheError = document.getElementById('headacheError');
+  let selectedHeadache = "";
+
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      selectedHeadache = chip.dataset.value;
+      headacheError.style.display = 'none';
+      otherWrap.classList.toggle('show', selectedHeadache === 'Other');
+    });
+  });
+
+  const form = document.getElementById('leadForm');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (!selectedHeadache) {
+      headacheError.style.display = 'block';
+      return;
+    }
+
+    const payload = {
+      name: form.name.value.trim(),
+      business: form.business.value.trim(),
+      phone: form.phone.value.trim(),
+      email: form.email.value.trim(),
+      industry: form.industry.value,
+      headache: selectedHeadache === 'Other' ? (otherInput.value.trim() || 'Other') : selectedHeadache,
+      submittedAt: new Date().toISOString()
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    try {
+      if (ENDPOINT_URL) {
+        await fetch(ENDPOINT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(payload)
+        });
+        // no-cors means we can't read the response — if the request didn't
+        // throw, we assume it went through. Check the Sheet to confirm.
+      } else {
+        // Fallback: store locally so the form is still testable pre-launch
+        const existing = JSON.parse(localStorage.getItem('hussaini_leads') || '[]');
+        existing.push(payload);
+        localStorage.setItem('hussaini_leads', JSON.stringify(existing));
+      }
+      document.getElementById('leadForm').style.display = 'none';
+      document.getElementById('successView').classList.add('show');
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit';
+      alert('Something went wrong — please try again or message us directly on WhatsApp.');
+    }
+  });
+</script>
+
+</body>
+</html>
